@@ -20,7 +20,7 @@ class SpelersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Speler::create($request->all());
     }
 
     /**
@@ -36,7 +36,8 @@ class SpelersController extends Controller
      */
     public function update(Request $request, Speler $speler)
     {
-        //
+        $speler->update($request->all());
+        return $speler;
     }
 
     /**
