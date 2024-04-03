@@ -80,6 +80,7 @@
 <select id="teamSelect" onchange="toonSpelers()">
     <option value="">Select Team</option>
 </select>
+
 <div class="container">
     <h1>Voetbal</h1>
 
@@ -135,6 +136,7 @@
         });
         document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
     }
+    
     const voegToe = async () => {
         const naam = document.querySelector("#naam").value
         const nationaliteit = document.querySelector("#nationaliteit").value
@@ -146,6 +148,7 @@
         await laadSpelers()
         toonSpelers()
     }
+
     const laad = async () => {
         await laadTeams()
         await laadSpelers()
