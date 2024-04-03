@@ -74,6 +74,12 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body onload="laad()">
+<h1>Voetbal</h1>
+
+<!-- Add a combobox to select teams -->
+<select id="teamSelect" onchange="toonSpelers()">
+    <option value="">Select Team</option>
+</select>
 <div class="container">
     <h1>Voetbal</h1>
 
@@ -99,8 +105,8 @@
     const apiSpelers = apiBasis + "spelers/";
     const apiTeams = apiBasis + "teams/";
 
-    let teams = []
-    let spelers = []
+    let teams = [];
+    let spelers = [];
 
     const laadTeams = async () => {
         console.log('Laad Hoofdstuk');
@@ -108,13 +114,7 @@
         const json = await response.data;
         json.forEach(el => {
             teams[el.id] = el.naam;
-            // Voeg elk team toe aan de selectbox
-            const option = document.createElement('option');
-            option.value = el.id;
-            option.textContent = el.naam;
-            document.getElementById('teamsid').appendChild(option);
         });
-        await toonSpelers();
     };
 
     const laadSpelers = async () => {
@@ -124,8 +124,15 @@
     }
 
     const toonSpelers = () => {
+        const selectedTeamId = document.getElementById('teamSelect').value;
+        let filteredSpelers = spelers;
+        if (selectedTeamId) {
+            filteredSpelers = spelers.filter(player => player.teamsid == selectedTeamId);
+        }
         let tabelInhoud = ''
-        spelers.map(el => tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td><button onclick="verwijder(${el.id})">x</button></td></tr>`)
+        filteredSpelers.forEach(el => {
+            tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td onclick="verwijder(${el.id})"> x </td></tr>`;
+        });
         document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
     }
     const voegToe = async () => {
