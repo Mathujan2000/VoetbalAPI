@@ -16,9 +16,9 @@
 </table>
 <script>
     "use strict";
-    const apiBasis = "http://127.0.0.1:8000/api/"; // Adjusted the base API URL
+    const apiBasis = "http://127.0.0.1:8000/api/";
     const apiSpelers = apiBasis + "spelers/";
-    const apiTeams = apiBasis + "teams/"; // Corrected API endpoint for teams
+    const apiTeams = apiBasis + "teams/";
 
     let teams = []
     let spelers = []
@@ -30,7 +30,7 @@
         json.forEach(el => {
             teams[el.id] = el.naam;
         });
-        await toonSpelers(); // Automatically load scripts for selected hoofdstuk
+        await toonSpelers();
     };
 
     const laadSpelers = async () => {
@@ -41,12 +41,20 @@
 
     const toonSpelers = () => {
         let tabelInhoud = ''
-        spelers.map(el => tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td></tr>`)
+        spelers.map(el => tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td><button onclick="verwijder(${el.id})">x</button></td></tr>`)
         document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
     }
 
     const laad = async () => {
         await laadTeams()
+        await laadSpelers()
+        toonSpelers()
+    }
+
+    const verwijder = async (id) => {
+        console.log("verwijder: ",id)
+        const respons = await axios.delete(apiSpelers+id)
+        console.log('status code', respons.status)
         await laadSpelers()
         toonSpelers()
     }

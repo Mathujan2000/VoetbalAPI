@@ -12,8 +12,8 @@ Route::get('/user', function (Request $request) {
 
 
 Route::apiResource('spelers', SpelersController::class);
-Route::get('teams/{id}/spelers', [SpelersController::class, 'index']);
-Route::delete('teams/{id}/spelers', [SpelersController::class, 'destroy']);
+Route::apiResource('teams', TeamsController::class);
+
 
 Route::apiResource('teams', TeamsController::class)->parameters(['teams' => 'teams'])
     ->only(['index', 'show']);

@@ -26,15 +26,15 @@ class SpelersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Speler $spelers)
+    public function show(Speler $speler)
     {
-        //
+        return $speler;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Speler $spelers)
+    public function update(Request $request, Speler $speler)
     {
         //
     }
@@ -42,8 +42,8 @@ class SpelersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Speler $spelers)
+    public function destroy(Speler $speler)
     {
-        //
+        $speler->delete();
     }
 }
