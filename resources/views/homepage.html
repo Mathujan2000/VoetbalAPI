@@ -115,6 +115,15 @@
         const json = await response.data;
         json.forEach(el => {
             teams[el.id] = el.naam;
+            // Voeg elk team toe aan het selectelement en aan de teams-selectbox voor het toevoegen van een speler
+            const option = document.createElement('option');
+            option.value = el.id;
+            option.textContent = el.naam;
+            document.getElementById('teamSelect').appendChild(option);
+            const option2 = document.createElement('option');
+            option2.value = el.id;
+            option2.textContent = el.naam;
+            document.getElementById('teamsid').appendChild(option2);
         });
     };
 
@@ -132,7 +141,7 @@
         }
         let tabelInhoud = ''
         filteredSpelers.forEach(el => {
-            tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td onclick="verwijder(${el.id})"> x </td></tr>`;
+            tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td><button onclick="verwijder(${el.id})">Verwijder</button></td></tr>`;
         });
         document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
     }
@@ -146,6 +155,7 @@
         const respons = await axios.post(apiSpelers, jsonstring, {headers: {'Content-Type': 'application/json'}})
         console.log('status code', respons.status)
         await laadSpelers()
+
         toonSpelers()
     }
 
