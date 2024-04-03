@@ -12,7 +12,7 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        //
+        return Team::all();
     }
 
     /**

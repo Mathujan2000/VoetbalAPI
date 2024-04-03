@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voetbal PHP CRUD</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body onload="laad()">
+<h1>Voetbal</h1>
+
+<table>
+    <thead>
+    <tr><th>Naam</th><th>Team</th><th>Land</th><th>Verwijderen</th></tr>
+    </thead>
+    <tbody id="tabelInhoud"></tbody>
+</table>
+<script>
+    "use strict";
+    const apiBasis = "http://127.0.0.1:8000/api/"; // Adjusted the base API URL
+    const apiSpelers = apiBasis + "spelers/";
+    const apiTeams = apiBasis + "teams/"; // Corrected API endpoint for teams
+
+    let teams = []
+    let spelers = []
+
+    const laadTeams = async () => {
+        console.log('Laad Hoofdstuk');
+        const response = await axios.get(apiTeams);
+        const json = await response.data;
+        json.forEach(el => {
+            teams[el.id] = el.naam;
+        });
+        await toonSpelers(); // Automatically load scripts for selected hoofdstuk
+    };
+
+    const laadSpelers = async () => {
+        console.log('Laad gegevens')
+        const response = await axios.get(apiSpelers)
+        spelers = await response.data
+    }
+
+    const toonSpelers = () => {
+        let tabelInhoud = ''
+        spelers.map(el => tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td></tr>`)
+        document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
+    }
+
+    const laad = async () => {
+        await laadTeams()
+        await laadSpelers()
+        toonSpelers()
+    }
+
+</script>
+</body>
+</html>
