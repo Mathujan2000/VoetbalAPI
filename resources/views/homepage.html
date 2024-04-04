@@ -110,7 +110,7 @@
     let spelers = [];
 
     const laadTeams = async () => {
-        console.log('Laad Hoofdstuk');
+        console.log('Laad Teams');
         const response = await axios.get(apiTeams);
         const json = await response.data;
         json.forEach(el => {
@@ -145,7 +145,7 @@
         });
         document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
     }
-    
+
     const voegToe = async () => {
         const naam = document.querySelector("#naam").value
         const nationaliteit = document.querySelector("#nationaliteit").value
