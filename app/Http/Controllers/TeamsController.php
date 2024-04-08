@@ -43,15 +43,15 @@ class TeamsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Team $teams)
+    public function show(Team $team)
     {
-        //
+        return $team;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $teams)
+    public function update(Request $request, Team $team)
     {
         //
     }
@@ -59,7 +59,7 @@ class TeamsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Team $teams)
+    public function destroy(Team $team)
     {
         //
     }
