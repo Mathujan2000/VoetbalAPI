@@ -43,15 +43,19 @@ class TeamsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Team $team)
+    public function show(Team $teams)
     {
-        return $team;
+
+        return response()->json([
+            'success' => true,
+            'data' => $teams,
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, Team $teams)
     {
         //
     }
@@ -59,7 +63,7 @@ class TeamsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Team $team)
+    public function destroy(Team $teams)
     {
         //
     }

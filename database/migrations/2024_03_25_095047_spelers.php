@@ -9,18 +9,19 @@ return new class extends Migration
     public function up()
     {
         Schema::create('spelers', function (Blueprint $table) {
-            $table->Integer('id')->autoIncrement();
+            $table->integer('id')->autoIncrement();
             $table->string('naam', 50)->nullable(false);
-            $table->Integer('teamsid');
+            $table->integer('teamsid');
             $table->string('nationaliteit', 20)->nullable(true);
-            $table->foreign('teamsid')->references('id')->on('teams')->restrictOnDelete();
-    
+            $table->foreign('teamsid')
+                ->references('id')
+                ->on('teams')
+                ->restrictOnDelete(); // Corrected onDelete constraint
         });
     }
-    
+
     public function down()
     {
         Schema::dropIfExists('spelers');
     }
-    
 };
