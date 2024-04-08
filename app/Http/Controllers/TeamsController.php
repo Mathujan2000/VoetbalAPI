@@ -4,15 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TeamsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Team::all();
+        Log::info('Spelers index opgevraagd', [
+            'ip' => $request->ip(),
+            'data' => $request->all()
+        ]);
+
+
+        if ($request->has('naam')) {
+            return response()->json([
+                'success' => true,
+                'data' => Team::where('naam', 'like', '%' . $request->naam . '%')->get(),
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => Team::all(),
+            ], 200);
+        }
     }
 
     /**

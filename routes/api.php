@@ -12,7 +12,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::apiResource('spelers', SpelersController::class);
-Route::apiResource('teams', TeamsController::class);
+// Route::apiResource('teams', TeamsController::class);
 
 
 Route::apiResource('teams', TeamsController::class)->parameters(['teams' => 'teams'])

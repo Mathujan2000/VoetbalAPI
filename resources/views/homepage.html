@@ -82,7 +82,7 @@
 </select>
 
 <div class="container">
-    <h1>Voetbal</h1>
+    <h1>Spelers Toevoegen</h1>
 
     <div class="form-container">
         <label for="naam">Naam:</label><input type="text" id="naam" required/><br/>
@@ -113,7 +113,8 @@
         console.log('Laad Hoofdstuk');
         const response = await axios.get(apiTeams);
         const json = await response.data;
-        json.forEach(el => {
+        console.log('json',json);
+        json.data.forEach(el => {
             teams[el.id] = el.naam;
             // Voeg elk team toe aan het selectelement en aan de teams-selectbox voor het toevoegen van een speler
             const option = document.createElement('option');
@@ -128,23 +129,23 @@
     };
 
     const laadSpelers = async () => {
-        console.log('Laad gegevens')
-        const response = await axios.get(apiSpelers)
-        spelers = await response.data
-    }
+    console.log('Laad Spelers');
+    const response = await axios.get(apiSpelers);
+    spelers = response.data.data; // Assign the array directly to spelers
+    };
 
     const toonSpelers = () => {
-        const selectedTeamId = document.getElementById('teamSelect').value;
-        let filteredSpelers = spelers;
-        if (selectedTeamId) {
-            filteredSpelers = spelers.filter(player => player.teamsid == selectedTeamId);
-        }
-        let tabelInhoud = ''
-        filteredSpelers.forEach(el => {
-            tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td><button onclick="verwijder(${el.id})">Verwijder</button></td></tr>`;
-        });
-        document.querySelector("#tabelInhoud").innerHTML = tabelInhoud
+    const selectedTeamId = document.getElementById('teamSelect').value;
+    let filteredSpelers = spelers; // spelers is an array, no need for .data here
+    if (selectedTeamId) {
+        filteredSpelers = spelers.filter(player => player.teamsid == selectedTeamId);
     }
+    let tabelInhoud = '';
+    filteredSpelers.forEach(el => { // Iterate directly over filteredSpelers
+        tabelInhoud += `<tr><td>${el.naam}</td><td>${teams[el.teamsid]}</td><td>${el.nationaliteit}</td><td><button onclick="verwijder(${el.id})">Verwijder</button></td></tr>`;
+    });
+    document.querySelector("#tabelInhoud").innerHTML = tabelInhoud;
+    };
     
     const voegToe = async () => {
         const naam = document.querySelector("#naam").value
@@ -153,6 +154,7 @@
         const jsonstring = {"naam": naam, "nationaliteit": nationaliteit, "teamsid": teams}
         console.log("voeg toe: ", jsonstring)
         const respons = await axios.post(apiSpelers, jsonstring, {headers: {'Content-Type': 'application/json'}})
+        console.log(respons);
         console.log('status code', respons.status)
         await laadSpelers()
 
@@ -168,11 +170,13 @@
     const verwijder = async (id) => {
         console.log("verwijder: ", id)
         const respons = await axios.delete(apiSpelers + id)
+        
         console.log('status code', respons.status)
         await laadSpelers()
         toonSpelers()
     }
 
 </script>
+
 </body>
 </html>
