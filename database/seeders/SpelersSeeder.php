@@ -17,7 +17,7 @@ class SpelersSeeder extends Seeder
         foreach ($clubs as $club) {
             for ($i = 0; $i < 20; $i++) {
                 Speler::create([
-                    'naam' => $faker->name,
+                    'naam' => $faker->name, 
                     'leeftijd' => $faker->numberBetween(18, 35),
                     'positie' => $faker->randomElement(['Doelman', 'Verdediger', 'Middenvelder', 'Aanvaller']),
                     'club_id' => $club->id,
